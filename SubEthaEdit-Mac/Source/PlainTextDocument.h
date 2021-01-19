@@ -185,6 +185,7 @@ extern NSString * const PlainTextDocumentDidSaveShouldReloadWebPreviewNotificati
 
 @property (nonatomic, readonly) NSString *fullTextContentString;
 - (FoldableTextStorage *)textStorage;
+- (NSString *)firstLineContentString;
 
 - (void)fillScriptsIntoContextMenu:(NSMenu *)aMenu;
 - (void)adjustModeMenu;

@@ -826,6 +826,12 @@ static NSString *tempFileName(NSString *origPath) {
     return I_textStorage.fullTextStorage.string;
 }
 
+- (NSString *)firstLineContentString {
+    NSScanner *scanner = [[NSScanner alloc] initWithString:I_textStorage.fullTextStorage.string];
+    NSString *firstLine = [[NSString alloc] init];
+    [scanner scanUpToCharactersFromSet:[NSCharacterSet newlineCharacterSet] intoString:&firstLine];
+    return firstLine;
+}
 
 - (void)fillScriptsIntoContextMenu:(NSMenu *)aMenu {
     NSArray *itemArray = [[self documentMode] contextMenuItemArray];

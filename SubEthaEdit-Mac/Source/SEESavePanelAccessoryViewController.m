@@ -49,6 +49,10 @@
 	[savePanel setCanSelectHiddenExtension:NO];
 	[savePanel setShowsHiddenFiles:showsHiddenFiles];
 	[savePanel setDelegate:self];
+    
+    if ([self.document.firstLineContentString isNotEqualTo:@""]) {
+        [savePanel setNameFieldStringValue:self.document.firstLineContentString];
+    }
 
 	if (UTTypeConformsTo((__bridge CFStringRef)documentFileType, (__bridge CFStringRef)kSEETypeSEEText)) {
 		[self.savePanelAccessoryFileFormatMatrixOutlet selectCellWithTag:1];
