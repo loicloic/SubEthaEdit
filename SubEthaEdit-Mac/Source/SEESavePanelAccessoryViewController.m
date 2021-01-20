@@ -43,16 +43,23 @@
     NSSavePanel *savePanel = self.savePanel;
     BOOL isGoingIntoBundles = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoIntoBundlesPrefKey"];
     BOOL showsHiddenFiles = [[NSUserDefaults standardUserDefaults] boolForKey:@"ShowsHiddenFiles"];
-
+    
+    //loic
+    // ToDo: useFirstLineAsFilename
+    //BOOL useFirstLineAsFilename = [[NSUserDefaults standardUserDefaults] boolForKey:@"UseFirstLineAsFilename"];
+    if ([self.document.firstLineContentString isNotEqualTo:@""]) {
+        // Hack: Replace "." by "-" as to not mess up with the rest of the code when looking for fileExtension
+        NSString *fileName = [[NSString stringWithString:self.document.firstLineContentString] stringByReplacingOccurrencesOfString:@"." withString:@"-"];
+        [savePanel setNameFieldStringValue:fileName];
+    }
+    
     [savePanel setTreatsFilePackagesAsDirectories:isGoingIntoBundles];
 	[savePanel setExtensionHidden:NO]; // this is needed so the initial state is extension not hidden - although docu states that the call below (setCanSelectHiddenExtension:) does this already for us
 	[savePanel setCanSelectHiddenExtension:NO];
 	[savePanel setShowsHiddenFiles:showsHiddenFiles];
 	[savePanel setDelegate:self];
-    
-    if ([self.document.firstLineContentString isNotEqualTo:@""]) {
-        [savePanel setNameFieldStringValue:self.document.firstLineContentString];
-    }
+
+
 
 	if (UTTypeConformsTo((__bridge CFStringRef)documentFileType, (__bridge CFStringRef)kSEETypeSEEText)) {
 		[self.savePanelAccessoryFileFormatMatrixOutlet selectCellWithTag:1];
